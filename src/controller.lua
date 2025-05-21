@@ -33,6 +33,11 @@ TAB_ACTIVE_COLOR = colors.green
 -- track all window objects
 WINDOW_OBJECTS = {}
 
+-- debug with rednet messages
+peripheral.find("modem", rednet.open)
+function debug(message)
+  rednet.broadcast(message, "debug_tablet")
+end
 
 -- find or create a window object
 -- i imagine these arent supposed to be used like this but
@@ -60,8 +65,8 @@ end
 -- check if a click collides with any active window objects
 function checkClickCollide(cx, cy)
   for k, v in pairs(WINDOW_OBJECTS) do
-    local x, y = v.getPosition()
-    local w, h = v.getSize()
+    local x, y = v.window.getPosition()
+    local w, h = v.window.getSize()
     if cx >= x and cx < x + w and cy >= y and cy < y + h then
       -- we in the box
       -- TODO decide how to check active? Visible? idk
@@ -87,7 +92,8 @@ end
 
 -- handle a tab being clicked by setting it to the active tab and redrawing tabs
 function handleTabClick(tabname)
-  return function()
+  return function(button, x, y)
+    debug(button .. "," .. x .. "," .. y)
     if STATE.selectedTab ~= tabname then
       STATE.selectedTab = tabname
       drawTabs()
@@ -97,7 +103,7 @@ end
 
 -- draw tabs at the top of the screen
 function drawTabs()
-  local x = 0
+  local x = 1
   -- TODO link this to tab width in tab.write below, just lazy rn
   local padding = math.floor(TAB_WIDTH / 2)
   for key, icon in pairs(TABS) do
@@ -155,10 +161,10 @@ end
 term.clear()
 drawTabs()
 
-
 while true do
   local event, a, b, c = os.pullEvent()
-  if event == "click" then
+  if event == "mouse_click" then
     processClick(a, b, c)
+    debug("click: " .. a .. ", " .. b .. ", " .. c)
   end
 end
