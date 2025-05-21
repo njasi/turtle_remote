@@ -70,8 +70,12 @@ function checkClickCollide(cx, cy)
     if cx >= x and cx < x + w and cy >= y and cy < y + h then
       -- we in the box
       -- TODO decide how to check active? Visible? idk
+      if v.clickEvent == nil then
+        goto continue
+      end
       return WINDOW_OBJECTS[k]
     end
+    ::continue::
   end
   return nil
 end
