@@ -1,0 +1,154 @@
+-- script to put on a computer or tablet to control a turtle
+-- this is only intended to work on the tablet sizing wise as I dont want to
+-- make a responsive environment
+
+-- current tablet state, too lazy to manage this properly
+STATE = {
+  debug = {},
+  inventory = {},
+  selectedTab = "tab_main",
+  activeKey = {}
+}
+
+--  main control tab    -> remote control looking screen
+--  inventory tab       -> view the inventory of the turtle
+--  turtle select tab   -> select what turtle to control
+--  debug tab           -> see more detailed output from actions
+--  command tab         -> send commands directly to the turtle's shell
+--  help tab
+TABS = {
+  ["tab_main"] = "M",
+  ["tab_inventory"] = "I",
+  ["tab_select"] = "S",
+  ["tab_command"] = "$",
+  ["tab_debug"] = "#",
+  ["tab_help"] = "?"
+}
+TAB_Y = 0      -- y level to draw tabs at
+TAB_HEIGHT = 1 -- at least 1
+TAB_WIDTH = 3  -- should be odd
+TAB_COLOR = colors.gray
+TAB_ACTIVE_COLOR = colors.green
+
+-- track all window objects
+WINDOW_OBJECTS = {}
+
+
+-- find or create a window object
+-- i imagine these arent supposed to be used like this but
+-- oh well not my problem
+function winOBJ_findOrCreate(name, x, y, width, height)
+  local obj = nil
+  local created = false
+  if WINDOW_OBJECTS[name] ~= nil then
+    obj = WINDOW_OBJECTS[name].window
+  else
+    obj = window.create(term.current(), x, y, width, height)
+    created = true
+    WINDOW_OBJECTS[name] = { window = obj }
+  end
+  return created, obj
+end
+
+-- attach a click event to a window object
+function winOBJ_addClickEvent(windowName, handler)
+  if WINDOW_OBJECTS[windowName] ~= nil then
+    WINDOW_OBJECTS[windowName].clickEvent = handler
+  end
+end
+
+-- check if a click collides with any active window objects
+function checkClickCollide(cx, cy)
+  for k, v in pairs(WINDOW_OBJECTS) do
+    local x, y = v.getPosition()
+    local w, h = v.getSize()
+    if cx >= x and cx < x + w and cy >= y and cy < y + h then
+      -- we in the box
+      -- TODO decide how to check active? Visible? idk
+      return WINDOW_OBJECTS[k]
+    end
+  end
+  return nil
+end
+
+-- process a click event
+function processClick(button, x, y)
+  local obj = checkClickCollide(x, y)
+  if obj == nil then
+    return
+  end
+
+  if obj.clickEvent ~= nil then
+    return
+  end
+
+  obj.clickEvent(button, x, y)
+end
+
+-- handle a tab being clicked by setting it to the active tab and redrawing tabs
+function handleTabClick(tabname)
+  return function()
+    if STATE.selectedTab ~= tabname then
+      STATE.selectedTab = tabname
+      drawTabs()
+    end
+  end
+end
+
+-- draw tabs at the top of the screen
+function drawTabs()
+  local x = 0
+  -- TODO link this to tab width in tab.write below, just lazy rn
+  local padding = math.floor(TAB_WIDTH / 2)
+  for key, icon in pairs(TABS) do
+    local created, tab = winOBJ_findOrCreate(key, x, TAB_Y, TAB_WIDTH, TAB_HEIGHT)
+
+    -- things we only need to do once
+    if created then
+      -- TODO
+      tab.write(" " .. icon .. " ")
+      winOBJ_addClickEvent(key, handleTabClick(key))
+    end
+
+    -- pick the bg color of the tab
+    local color = TAB_COLOR
+    if STATE.selectedTab == key then
+      color = TAB_ACTIVE_COLOR
+    end
+    tab.setBackgroundColor(color)
+    tab.setTextColor(color.black)
+
+    -- iter
+    x = x + TAB_WIDTH
+  end
+end
+
+function drawInventory()
+
+end
+
+function drawController()
+
+end
+
+function drawSelect()
+
+end
+
+function drawDebug()
+  -- state
+end
+
+function drawCommand()
+
+end
+
+function drawMenu()
+
+end
+
+function remoteScan()
+
+end
+
+drawTabs()
