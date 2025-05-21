@@ -109,13 +109,6 @@ function drawTabs()
   for key, icon in pairs(TABS) do
     local created, tab = winOBJ_findOrCreate(key, x, TAB_Y, TAB_WIDTH, TAB_HEIGHT)
 
-    -- things we only need to do once
-    if created then
-      -- TODO
-      tab.write(" " .. icon .. " ")
-      winOBJ_addClickEvent(key, handleTabClick(key))
-    end
-
     -- pick the bg color of the tab
     local color = TAB_COLOR
     if STATE.selectedTab == key then
@@ -123,6 +116,14 @@ function drawTabs()
     end
     tab.setBackgroundColor(color)
     tab.setTextColor(colors.black)
+    tab.write(" " .. icon .. " ")
+
+    -- things we only need to do once
+    if created then
+      -- TODO
+      winOBJ_addClickEvent(key, handleTabClick(key))
+    end
+
     tab.redraw()
 
     -- iter
@@ -174,3 +175,6 @@ end
 
 status, message = pcall(main)
 debug(message)
+term.clear()
+term.setCursorPos(1,1)
+term.write(message)
