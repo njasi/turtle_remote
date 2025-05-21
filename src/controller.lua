@@ -24,7 +24,7 @@ TABS = {
   ["tab_debug"] = "#",
   ["tab_help"] = "?"
 }
-TAB_Y = 0      -- y level to draw tabs at
+TAB_Y = 1      -- y level to draw tabs at
 TAB_HEIGHT = 1 -- at least 1
 TAB_WIDTH = 3  -- should be odd
 TAB_COLOR = colors.gray
@@ -116,7 +116,7 @@ function drawTabs()
       color = TAB_ACTIVE_COLOR
     end
     tab.setBackgroundColor(color)
-    tab.setTextColor(color.black)
+    tab.setTextColor(colors.black)
 
     -- iter
     x = x + TAB_WIDTH
@@ -151,4 +151,5 @@ function remoteScan()
 
 end
 
+term.clear()
 drawTabs()
