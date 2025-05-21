@@ -28,7 +28,9 @@ TAB_Y = 1      -- y level to draw tabs at
 TAB_HEIGHT = 1 -- at least 1
 TAB_WIDTH = 3  -- should be odd
 TAB_COLOR = colors.gray
-TAB_ACTIVE_COLOR = colors.green
+TAB_TEXT_COLOR = colors.black
+TAB_ACTIVE_COLOR = colors.black
+TAB_ACTIVE_TEXT_COLOR = colors.green
 
 -- track all window objects
 WINDOW_OBJECTS = {}
@@ -70,12 +72,10 @@ function checkClickCollide(cx, cy)
     if cx >= x and cx < x + w and cy >= y and cy < y + h then
       -- we in the box
       -- TODO decide how to check active? Visible? idk
-      if v.clickEvent == nil then
-        goto continue
+      if v.clickEvent ~= nil then
+        return v
       end
-      return WINDOW_OBJECTS[k]
     end
-    ::continue::
   end
   return nil
 end
