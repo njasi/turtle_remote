@@ -117,6 +117,7 @@ function drawTabs()
     end
     tab.setBackgroundColor(color)
     tab.setTextColor(colors.black)
+    tab.redraw()
 
     -- iter
     x = x + TAB_WIDTH
@@ -153,3 +154,11 @@ end
 
 term.clear()
 drawTabs()
+
+
+while true do
+  local event, a, b, c = os.pullEvent()
+  if event == "click" then
+    processClick(a, b, c)
+  end
+end
