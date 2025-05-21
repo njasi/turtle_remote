@@ -120,11 +120,13 @@ function drawTabs()
 
     -- pick the bg color of the tab
     local color = TAB_COLOR
+    local textColor = TAB_TEXT_COLOR
     if STATE.selectedTab == key then
       color = TAB_ACTIVE_COLOR
+      textColor = TAB_ACTIVE_TEXT_COLOR
     end
     tab.setBackgroundColor(color)
-    tab.setTextColor(colors.black)
+    tab.setTextColor(textColor)
     tab.setCursorPos(1,1)
     tab.write(" " .. icon .. " ")
 
