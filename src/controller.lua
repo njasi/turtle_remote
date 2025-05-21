@@ -106,6 +106,11 @@ function drawTabs()
   local x = 1
   -- TODO link this to tab width in tab.write below, just lazy rn
   local padding = math.floor(TAB_WIDTH / 2)
+  local w, h = term.getSize()
+  local created , bar = winOBJ_findOrCreate("tab_background", 1, 1, w, 1)
+  bar.setBackgroundColor(TAB_COLOR)
+  bar.setTextColor(TAB_COLOR)
+  bar.write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   for key, icon in pairs(TABS) do
     local created, tab = winOBJ_findOrCreate(key, x, TAB_Y, TAB_WIDTH, TAB_HEIGHT)
 
