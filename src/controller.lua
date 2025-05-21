@@ -83,7 +83,7 @@ function processClick(button, x, y)
     return
   end
 
-  if obj.clickEvent ~= nil then
+  if obj.clickEvent == nil then
     return
   end
 
@@ -158,13 +158,19 @@ function remoteScan()
 
 end
 
-term.clear()
-drawTabs()
 
-while true do
-  local event, a, b, c = os.pullEvent()
-  if event == "mouse_click" then
-    processClick(a, b, c)
-    debug("click: " .. a .. ", " .. b .. ", " .. c)
+function main()
+  term.clear()
+  drawTabs()
+
+  while true do
+    local event, a, b, c = os.pullEvent()
+    if event == "mouse_click" then
+      processClick(a, b, c)
+      debug("click: " .. a .. ", " .. b .. ", " .. c)
+    end
   end
 end
+
+status, message = pcall(main)
+debug(message)
