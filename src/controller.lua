@@ -116,6 +116,7 @@ function drawTabs()
     end
     tab.setBackgroundColor(color)
     tab.setTextColor(colors.black)
+    tab.setCursorPos(1,1)
     tab.write(" " .. icon .. " ")
 
     -- things we only need to do once
