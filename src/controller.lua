@@ -17,12 +17,12 @@ STATE = {
 --  command tab         -> send commands directly to the turtle's shell
 --  help tab
 TABS = {
-  ["tab_main"] = "M",
-  ["tab_inventory"] = "I",
-  ["tab_select"] = "S",
-  ["tab_command"] = "$",
-  ["tab_debug"] = "#",
-  ["tab_help"] = "?"
+  {["key"] = "tab_main", ["icon"] = "M"},
+  {["key"] = "tab_inventory", ["icon"] = "I"},
+  {["key"] = "tab_select", ["icon"] = "S"},
+  {["key"] = "tab_command", ["icon"] = "$"},
+  {["key"] = "tab_debug", ["icon"] = "#"},
+  {["key"] = "tab_help", ["icon"] = "?"}
 }
 TAB_Y = 1      -- y level to draw tabs at
 TAB_HEIGHT = 1 -- at least 1
@@ -111,11 +111,15 @@ function drawTabs()
   -- TODO link this to tab width in tab.write below, just lazy rn
   local padding = math.floor(TAB_WIDTH / 2)
   local w, h = term.getSize()
-  local created , bar = winOBJ_findOrCreate("tab_background", 1, 1, w, 1)
+  local _ , bar = winOBJ_findOrCreate("tab_background", 1, 1, w, 1)
   bar.setBackgroundColor(TAB_COLOR)
   bar.setTextColor(TAB_COLOR)
   bar.write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-  for key, icon in pairs(TABS) do
+  for i in 1, #TABS do
+    local curr = TABS[i]
+    local key = curr.key
+    local icon = curr.icon
+
     local created, tab = winOBJ_findOrCreate(key, x, TAB_Y, TAB_WIDTH, TAB_HEIGHT)
 
     -- pick the bg color of the tab
