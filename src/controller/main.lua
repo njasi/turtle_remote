@@ -215,6 +215,12 @@ end
 
 
 function main()
+  -- startup 
+  term.clear()
+  term.setBackgroundColor(colors.green)
+  drawStartupScreen()
+  sleep(3)
+
   term.clear()
   term.setBackgroundColor(colors.black)
   drawTabs()
@@ -228,11 +234,6 @@ function main()
   end
 end
 
-
-term.clear()
-term.setBackgroundColor(colors.green)
-drawStartupScreen()
-sleep(3)
 
 status, message = pcall(main)
 debug(message)
