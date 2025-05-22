@@ -20,8 +20,8 @@ TABS = {
   {["key"] = "tab_main", ["icon"] = "M"},
   {["key"] = "tab_inventory", ["icon"] = "I"},
   {["key"] = "tab_select", ["icon"] = "S"},
-  {["key"] = "tab_command", ["icon"] = "$"},
   {["key"] = "tab_debug", ["icon"] = "#"},
+  {["key"] = "tab_command", ["icon"] = "$"},
   {["key"] = "tab_help", ["icon"] = "?"}
 }
 TAB_Y = 1      -- y level to draw tabs at
@@ -31,6 +31,10 @@ TAB_COLOR = colors.gray
 TAB_TEXT_COLOR = colors.black
 TAB_ACTIVE_COLOR = colors.black
 TAB_ACTIVE_TEXT_COLOR = colors.green
+
+
+CLOSE_COLOR = colors.red
+CLOSE_TEXT_COLOR = colors.white
 
 -- track all window objects
 WINDOW_OBJECTS = {}
@@ -107,7 +111,6 @@ end
 
 -- draw tabs at the top of the screen
 function drawTabs()
-  local x = 1
   -- TODO link this to tab width in tab.write below, just lazy rn
   local padding = math.floor(TAB_WIDTH / 2)
   local w, h = term.getSize()
@@ -115,7 +118,20 @@ function drawTabs()
   bar.setBackgroundColor(TAB_COLOR)
   bar.setTextColor(TAB_COLOR)
   bar.write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-  for i in 1, 6 do
+
+  local x, _ = term.getSize()
+  local _, close = winOBJ_findOrCreate("tab_close", x - TAB_WIDTH, TAB_Y, TAB_WIDTH, TAB_HEIGHT)
+  close.setBackgroundColor(CLOSE_TEXT_COLOR)
+  close.setTextColor(CLOSE_COLOR)
+  close.setCursorPos(1,1)
+  close.write(" x ")
+  winOBJ_addClickEvent("tab_close", function ()
+    os.exit(0)
+  end)
+
+
+  x = 1
+  for i = 1, #TABS do
     local curr = TABS[i]
     local key = curr.key
     local icon = curr.icon
