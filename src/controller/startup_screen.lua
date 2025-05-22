@@ -1,8 +1,8 @@
 TURTLE = {
-  "y\97b\8C\8C\8C\8C\96o\80", -- start y back
-  "y\95\95\80\80b\95\95y\95", -- start y back
-  "y\95\95\80\80b\95\95y\95", -- start y back
-  "b\8A\8C\8C\8C\8C\85o\80"   --start b back
+  "y\x97b\x8C\x8C\x8C\x8C\x96o\x80", -- start y back
+  "y\x95\x95\x80\x80b\x95\x95y\x95", -- start y back
+  "y\x95\x95\x80\x80b\x95\x95y\x95", -- start y back
+  "b\x8A\x8C\x8C\x8C\x8C\x85o\x80"   --start b back
 }
 
 COLOR_MAP = {
@@ -29,7 +29,7 @@ function writeColorString(str, selectedTerm, otherColor)
 end
 
 function createTurtle(selectedTerm)
-  local turtleWindow = window.create(selectedTerm, 0, 0, 7, 4)
+  local turtleWindow = window.create(selectedTerm, 10, 10, 7, 4)
   for i = 1, #TURTLE do
     writeColorString(TURTLE[i], turtleWindow, colors.green)
     selectedTerm.write("\n")
@@ -39,9 +39,9 @@ end
 
 function drawStartupScreen()
   local currentTerm = term.current()
-  local w, h currentTerm.getSize()
+  local w, h term.getSize()
   local turtle = createTurtle(currentTerm)
-  local title = window.create(currentTerm, 0, 0, w, 1)
+  local title = window.create(currentTerm, 1, 1, w, 1)
   -- todo get a better name etc
   title.write("rc turtle tm")
   -- todo move the turtle in the loading screen

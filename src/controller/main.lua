@@ -119,7 +119,7 @@ function drawTabs()
   local _ , bar = winOBJ_findOrCreate("tab_background", 1, 1, w, 1)
   bar.setBackgroundColor(TAB_COLOR)
   bar.setTextColor(TAB_COLOR)
-  bar.write("===========")
+  bar.write("========================================================================")
   bar.setVisible(true)
 
   local x, _ = term.getSize()
@@ -216,6 +216,7 @@ end
 
 function main()
   term.clear()
+  term.setBackgroundColor(colors.black)
   drawTabs()
 
   while true do
