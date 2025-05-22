@@ -216,8 +216,6 @@ end
 
 function main()
   -- startup 
-  term.clear()
-  term.setBackgroundColor(colors.green)
   drawStartupScreen()
   sleep(3)
 

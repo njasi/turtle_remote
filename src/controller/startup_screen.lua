@@ -10,7 +10,8 @@ COLOR_MAP = {
   ["b"] = { colors.black, colors.yellow }
 }
 
---write a string with cursed color markers
+-- write a string with cursed color markers
+-- so it works in older cc versions idk
 function writeColorString(str, selectedTerm, otherColor)
   for i = 1, #str do
     local c = str:sub(i, i)
@@ -29,16 +30,19 @@ function writeColorString(str, selectedTerm, otherColor)
 end
 
 function createTurtle(selectedTerm)
-  local turtleWindow = window.create(selectedTerm, 10, 10, 7, 4)
+  local turtleWindow = window.create(selectedTerm, 10, 10, 20, 4)
   for i = 1, #TURTLE do
     writeColorString(TURTLE[i], turtleWindow, colors.green)
-    selectedTerm.write("\n")
+    turtleWindow.setCursorPos(1,i)
   end
   return turtleWindow
 end
 
 function drawStartupScreen()
   local currentTerm = term.current()
+  term.setBackgroundColor(colors.green)
+  term.clear()
+
   local w, h = term.getSize()
   local turtle = createTurtle(currentTerm)
   local title = window.create(currentTerm, 1, 1, w, 1)
