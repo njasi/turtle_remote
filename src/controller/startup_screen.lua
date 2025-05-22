@@ -1,8 +1,8 @@
 TURTLE = {
-  "y\x97b\x8C\x8C\x8C\x8C\x96o\x80", -- start y back
-  "y\x95\x95\x80\x80b\x95\x95y\x95", -- start y back
-  "y\x95\x95\x80\x80b\x95\x95y\x95", -- start y back
-  "b\x8A\x8C\x8C\x8C\x8C\x85o\x80"   --start b back
+  "y\151b\140\140\140\140\150o\128", -- start y back
+  "y\149\149\128\128b\149\149y\149", -- start y back
+  "y\149\149\128\128b\149\149y\149", -- start y back
+  "b\138\140\140\140\140\133o\128"   --start b back
 }
 
 COLOR_MAP = {
@@ -39,7 +39,7 @@ end
 
 function drawStartupScreen()
   local currentTerm = term.current()
-  local w, h term.getSize()
+  local w, h = term.getSize()
   local turtle = createTurtle(currentTerm)
   local title = window.create(currentTerm, 1, 1, w, 1)
   -- todo get a better name etc
