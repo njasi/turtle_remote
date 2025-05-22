@@ -115,7 +115,7 @@ function drawTabs()
   bar.setBackgroundColor(TAB_COLOR)
   bar.setTextColor(TAB_COLOR)
   bar.write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-  for i in 1, #TABS do
+  for i in 1, 6 do
     local curr = TABS[i]
     local key = curr.key
     local icon = curr.icon
