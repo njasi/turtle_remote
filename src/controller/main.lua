@@ -2,6 +2,8 @@
 -- this is only intended to work on the tablet sizing wise as I dont want to
 -- make a responsive environment
 
+require "startup_screen"
+
 -- current tablet state, too lazy to manage this properly
 STATE = {
   debug = {},
@@ -17,7 +19,7 @@ STATE = {
 --  command tab         -> send commands directly to the turtle's shell
 --  help tab
 TABS = {
-  {["key"] = "tab_main", ["icon"] = "M"},
+  {["key"] = "tab_main", ["icon"] = "C"},
   {["key"] = "tab_inventory", ["icon"] = "I"},
   {["key"] = "tab_select", ["icon"] = "S"},
   {["key"] = "tab_debug", ["icon"] = "#"},
@@ -117,17 +119,21 @@ function drawTabs()
   local _ , bar = winOBJ_findOrCreate("tab_background", 1, 1, w, 1)
   bar.setBackgroundColor(TAB_COLOR)
   bar.setTextColor(TAB_COLOR)
-  bar.write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  bar.write("===========")
+  bar.setVisible(true)
 
   local x, _ = term.getSize()
-  local _, close = winOBJ_findOrCreate("tab_close", x - TAB_WIDTH + 1, TAB_Y, TAB_WIDTH, TAB_HEIGHT)
+  local createdClose, close = winOBJ_findOrCreate("tab_close", x - TAB_WIDTH + 1, TAB_Y, TAB_WIDTH, TAB_HEIGHT)
   close.setBackgroundColor(CLOSE_COLOR)
   close.setTextColor(CLOSE_TEXT_COLOR)
   close.setCursorPos(1,1)
   close.write(" x ")
-  winOBJ_addClickEvent("tab_close", function ()
-    os.exit(0)
-  end)
+  if createdClose then
+    winOBJ_addClickEvent("tab_close", function ()
+      os.exit(0)
+    end)
+  end
+  close.setVisible(true)
 
 
   x = 1
@@ -145,6 +151,7 @@ function drawTabs()
       color = TAB_ACTIVE_COLOR
       textColor = TAB_ACTIVE_TEXT_COLOR
     end
+    tab.setVisible(true)
     tab.setBackgroundColor(color)
     tab.setTextColor(textColor)
     tab.setCursorPos(1,1)
@@ -183,11 +190,26 @@ function drawCommand()
 
 end
 
-function drawMenu()
+function drawController()
 
 end
 
 function remoteScan()
+
+end
+
+
+
+function redraw()
+  -- brute force set everything invis cause i dont wanna think
+  for k, v in pairs(WINDOW_OBJECTS) do
+    v.window.setVisible(false)
+  end
+
+  -- draw the top tabs
+  drawTabs()
+
+  -- todo select which menu to draw
 
 end
 
@@ -204,6 +226,12 @@ function main()
     end
   end
 end
+
+
+term.clear()
+term.setBackgroundColor(colors.green)
+drawStartupScreen()
+sleep(3)
 
 status, message = pcall(main)
 debug(message)
