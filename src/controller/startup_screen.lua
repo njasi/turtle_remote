@@ -1,7 +1,7 @@
 TURTLE = {
   "y\151b\140\140\140\140\148o\128", -- start y back
-  "y\149\149\128\128b\149\149y\149", -- start y back
-  "y\149\149\128\128b\149\149y\149", -- start y back
+  "y\149\149\128\128b\149\149y\149o\128", -- start y back
+  "y\149\149\128\128b\149\149y\149o\128", -- start y back
   "b\138\140\140\140\140\133o\128"   --start b back
 }
 
@@ -33,7 +33,7 @@ function createTurtle(selectedTerm)
   local turtleWindow = window.create(selectedTerm, 10, 10, 7, 4)
   for i = 1, #TURTLE do
     writeColorString(TURTLE[i], turtleWindow, colors.green)
-    turtleWindow.setCursorPos(1,i + 1)
+    turtleWindow.setCursorPos(1, i + 1)
   end
   return turtleWindow
 end
@@ -51,8 +51,10 @@ function drawStartupScreen()
   -- todo move the turtle in the loading screen
   local i = w + 1
   while i > -8 do
-    turtle.reposition(i, math.floor(h/2))
+    term.clear()
+    title.redraw()
+    turtle.reposition(i, math.floor(h/2) - 2)
     i = i - 1
-    sleep(0.1)
+    sleep(0.05)
   end
 end

@@ -215,12 +215,11 @@ end
 
 
 function main()
-  -- startup 
+  -- startup
   drawStartupScreen()
-  sleep(3)
 
-  term.clear()
   term.setBackgroundColor(colors.black)
+  term.clear()
   drawTabs()
 
   while true do
